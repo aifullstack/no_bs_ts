@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Atreides",
+    "planets": "Calladan"
+  },
+  {
+    "name": "Corrino",
+    "planets": ["kaitan", "salusa secundus"]
+  },
+  {
+    "name": "harkonnen",
+    "planets": ["giedi prime", "arrakis"]
+  }
+]
