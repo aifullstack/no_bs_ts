@@ -1,6 +1,6 @@
 interface MyUser {
   name: string;
-  id: string;
+  id: number;
   email?: string;
 }
 
@@ -23,7 +23,7 @@ console.log(
   merge(
     {
       name: "jack",
-      id: "foo",
+      id: 2,
       email: "ajsd@gal.com",
     },
     {
@@ -37,12 +37,16 @@ type RequiredMyUser = Required<MyUser>;
 
 // cherry pick the key
 type JustEmailAndName = Pick<MyUser, "email" | "name">;
+type UserWithoutID = Omit<MyUser, "id">;
 
-const mapById = (users: MyUser[]): Record<string, MyUser> => {
+// 每当id的type变化的时候，下面的MyUser['id']自动变化
+const mapById = (users: MyUser[]): Record<MyUser["id"], UserWithoutID> => {
   return users.reduce((a, v) => {
+    // 把不同的key的值进行拆分
+    const { id, ...other } = v;
     return {
       ...a,
-      [v.id]: v,
+      [id]: other,
     };
   }, {});
 };
@@ -50,11 +54,11 @@ const mapById = (users: MyUser[]): Record<string, MyUser> => {
 console.log(
   mapById([
     {
-      id: "foo",
+      id: 1,
       name: "Mr. foo",
     },
     {
-      id: "abc",
+      id: 2,
       name: "Mr. abc",
     },
   ])
